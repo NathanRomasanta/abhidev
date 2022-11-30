@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "428190126286",
+    "project_id": "abhidev-f8d73",
+    "storage_bucket": "abhidev-f8d73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428190126286:android:438175c9711171a321c09f",
+        "android_client_info": {
+          "package_name": "com.abhinstitute.abhidev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428190126286-9gh4df6rnv5epcsqni0sij8718n06cs0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxxY3Syy4dRtKhL6EjlzHopmuYHvDLVuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428190126286-9gh4df6rnv5epcsqni0sij8718n06cs0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

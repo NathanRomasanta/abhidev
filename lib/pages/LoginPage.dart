@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,8 +13,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  late String _email, _password;
+
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +23,20 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
-          child: SingleChildScrollView(
+          child: Form(
+            key: _formkey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 TextFormField(
+                  validator: (input) {
+                    if(input!.isEmpty){
+                      return "Please Type your Email";
+
+                    }
+                  },
+                  onSaved: (input)=> _email = input!,
                   keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
                   textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                       labelText: "Email",
@@ -36,7 +45,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 70),
                 TextFormField(
-                  controller: _passwordController,
+                  validator: (input) {
+                    if(input!.isEmpty){
+                      return "Please Type your Password";
+
+                    }
+                  },
+                  onSaved: (input)=> _password = input!,
+
                   textInputAction: TextInputAction.done,
                   obscureText: true,
                   decoration: const InputDecoration(labelText: "Password"),
@@ -44,10 +60,9 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 100,
                 ),
-
                 ElevatedButton(
                   onPressed: () {
-                    ;
+
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -72,5 +87,18 @@ class _LoginPageState extends State<LoginPage> {
 
 
     );
+  }
+
+
+  void signIn() async {
+    final formState = _formkey.currentState;
+    if(formState!.validate()){
+      formState.save();
+      try {
+        User user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password)) as User;
+      }catch(e){
+        print('caught error: $e');
+      }
+    }
   }
 }

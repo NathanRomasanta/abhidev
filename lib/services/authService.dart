@@ -1,4 +1,4 @@
-import 'package:abhidev/pages/landingPage.dart';
+import 'package:abhidev/pages/LandingPage.dart';
 import 'package:abhidev/studentPages/studentHome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,15 +32,7 @@ class AuthService {
 
 //Auth Service
   handleAuthStateStudent() {
-    return StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.hasData) {
-            return studentHome();
-          }else {
-            return const LandingPage();
-          }
-        });
+
 
   }
 

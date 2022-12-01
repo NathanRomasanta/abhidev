@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:abhidev/pages/landingPage.dart';
+import 'package:abhidev/pages/LandingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -24,7 +24,7 @@ class _LogoScreenState extends State<LogoScreen> {
 
   displayNextScreen() {
     Timer(const Duration(seconds: 5), (){
-      Navigator.pushReplacement(context, PageTransition(child: const LandingPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 500)));
+      Navigator.pushReplacement(context, PageTransition(child: const AuthGate(), type: PageTransitionType.fade, duration: Duration(milliseconds: 500)));
     });
   }
 

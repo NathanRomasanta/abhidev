@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:abhidev/pages/Homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-
+                    signIn();
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -90,15 +93,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  void signIn() async {
-    final formState = _formkey.currentState;
-    if(formState!.validate()){
-      formState.save();
-      try {
-        User user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password)) as User;
-      }catch(e){
-        print('caught error: $e');
-      }
-    }
-  }
-}

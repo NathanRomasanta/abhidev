@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:abhidev/pages/LandingPage.dart';
+import 'package:abhidev/pages/HomeScreen.dart';
+import 'package:abhidev/pages/AuthGate.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 

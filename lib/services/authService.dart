@@ -1,4 +1,4 @@
-import 'package:abhidev/pages/LandingPage.dart';
+import 'package:abhidev/pages/AuthGate.dart';
 import 'package:abhidev/studentPages/studentHome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

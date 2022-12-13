@@ -1,19 +1,17 @@
+import 'package:abhidev/studentPages/studentHome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../main.dart';
-
-
-class RegisterAdmin extends StatefulWidget {
-  const RegisterAdmin({Key? key}) : super(key: key);
+class RegisterStudents extends StatefulWidget {
+  const RegisterStudents({Key? key}) : super(key: key);
 
   @override
-  State<RegisterAdmin> createState() => _RegisterAdminState();
+  State<RegisterStudents> createState() => _RegisterStudentsState();
 }
 
-class _RegisterAdminState extends State<RegisterAdmin> {
+class _RegisterStudentsState extends State<RegisterStudents> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final firstnameController = TextEditingController();
@@ -121,37 +119,28 @@ class _RegisterAdminState extends State<RegisterAdmin> {
   }
 
   Future Register() async {
-
-    String Fname = firstnameController.text.trim();
-    String Lname = lastnameController.text.trim();
-
-
-
+    User? user = FirebaseAuth.instance.currentUser;
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
-          password: passwordController.text.trim()).then((value) async {
-            User? user = FirebaseAuth.instance.currentUser;
-            await FirebaseFirestore.instance.collection("admins").doc(user?.uid).set({
-
-          "FirstName" : Fname,
-          "LastName" : Lname,
-          "uid" : user?.uid,
-          "admin" : true,
-
-        });
-      });
+          password: passwordController.text.trim());
 
 
+      /*FirebaseFirestore.instance.collection("Admins").doc(user?.uid).set({
+        "FirstName" : firstnameController,
+        "LastName" : lastnameController,
+        "uid" : user?.uid,
+        "email" : emailController,
+        "password" : passwordController,
+        "admin" : false,
 
+      }); */
     }
     on FirebaseAuthException catch (e) {
       print(e);
     }
-
     Navigator.pop(context);
-
 
   }
 }

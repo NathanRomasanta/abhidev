@@ -17,7 +17,6 @@ class _DividerScreenState extends State<DividerScreen> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-
           const SizedBox(
             height: 100,
           ),
@@ -31,7 +30,7 @@ class _DividerScreenState extends State<DividerScreen> {
                 backgroundColor: Colors.blue,
                 fixedSize: const Size(240, 80)),
             child: Text(
-              "Login",
+              "Instructor Login",
               style: GoogleFonts.montserrat(
                 color: Colors.white,
                 fontSize: 17,
@@ -53,7 +52,29 @@ class _DividerScreenState extends State<DividerScreen> {
                 backgroundColor: Colors.blue,
                 fixedSize: const Size(240, 80)),
             child: Text(
-              "Login",
+              "Student Login",
+              style: GoogleFonts.montserrat(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+
+          const SizedBox(
+            height: 100,
+          ),
+          ElevatedButton(
+            onPressed: () {
+
+            },
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22)),
+                backgroundColor: Colors.blue,
+                fixedSize: const Size(240, 80)),
+            child: Text(
+              "Admin Login",
               style: GoogleFonts.montserrat(
                 color: Colors.white,
                 fontSize: 17,

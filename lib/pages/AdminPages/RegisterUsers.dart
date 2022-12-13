@@ -1,8 +1,11 @@
-import 'package:abhidev/studentPages/studentHome.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:abhidev/pages/AdminPages/RegisterAdmin.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../AuthGate.dart';
+import 'RegisterStudents.dart';
+
 
 class RegisterUsers extends StatefulWidget {
   const RegisterUsers({Key? key}) : super(key: key);
@@ -12,21 +15,6 @@ class RegisterUsers extends StatefulWidget {
 }
 
 class _RegisterUsersState extends State<RegisterUsers> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final firstnameController = TextEditingController();
-  final lastnameController = TextEditingController();
-
-
-  @override
-  void dispose()  {
-    firstnameController.dispose();
-    lastnameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-
-    super.dispose();
-  }
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
@@ -34,6 +22,8 @@ class _RegisterUsersState extends State<RegisterUsers> {
     return Scaffold(
 
       backgroundColor: Colors.white,
+
+
       body: SafeArea(
         child: Center(
           child: Form(
@@ -41,57 +31,33 @@ class _RegisterUsersState extends State<RegisterUsers> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  TextFormField(
-                    controller: firstnameController,
-                    keyboardType: TextInputType.name,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                        labelText: "First Name",
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: Colors.black54))),
-                  ),
-
-                  const SizedBox(height: 70),
-
-                  TextFormField(
-                    controller: lastnameController,
-                    keyboardType: TextInputType.name,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                        labelText: "Last Name",
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: Colors.black54))),
-                  ),
-
-                  const SizedBox(height: 70),
-
-                  TextFormField(
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                        labelText: "Email",
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: Colors.black54))),
-                  ),
-
-                  const SizedBox(height: 70),
-
-                  TextFormField(
-                    controller: passwordController,
-                    textInputAction: TextInputAction.done,
-                    obscureText: true,
-                    decoration: const InputDecoration(labelText: "Password"),
-                  ),
+                  Text("Admin Home"),
                   const SizedBox(
                     height: 100,
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Register();
+                      NavigateToRegisterAdmin();},
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22)),
+                        backgroundColor: Colors.blue,
+                        fixedSize: const Size(240, 80)),
+                    child: Text(
+                      "Register Admin",
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      NavigateToRegisterInstructor();
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -99,7 +65,28 @@ class _RegisterUsersState extends State<RegisterUsers> {
                         backgroundColor: Colors.blue,
                         fixedSize: const Size(240, 80)),
                     child: Text(
-                      "Login",
+                      "Register Instructors",
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      NavigateToRegisterInstructor();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22)),
+                        backgroundColor: Colors.blue,
+                        fixedSize: const Size(240, 80)),
+                    child: Text(
+                      "Register Instructors",
                       style: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontSize: 17,
@@ -114,33 +101,14 @@ class _RegisterUsersState extends State<RegisterUsers> {
         ),
       ),
 
-
     );
   }
 
-  Future Register() async {
-    User? user = FirebaseAuth.instance.currentUser;
+  void NavigateToRegisterAdmin () {
+    Navigator.push(context, PageTransition(child: const RegisterAdmin(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 500)));
+  }
 
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
-
-
-      /*FirebaseFirestore.instance.collection("Admins").doc(user?.uid).set({
-        "FirstName" : firstnameController,
-        "LastName" : lastnameController,
-        "uid" : user?.uid,
-        "email" : emailController,
-        "password" : passwordController,
-        "admin" : false,
-
-      }); */
-    }
-    on FirebaseAuthException catch (e) {
-      print(e);
-    }
-    Navigator.pop(context);
-
+  void NavigateToRegisterInstructor () {
+    Navigator.push(context, PageTransition(child: const RegisterUsers(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 500)));
   }
 }

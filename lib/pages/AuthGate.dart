@@ -1,4 +1,4 @@
-import 'package:abhidev/pages/RoleChecker.dart';
+import 'package:abhidev/pages/RoleAuthenticator.dart';
 import 'package:abhidev/pages/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +18,7 @@ class AuthGate extends StatelessWidget {
             return Center(child: Text("Something Went Wrong!"),);
           }
           else if (snapshot.hasData){
-            return HomeScreen();
+            return RoleAuthentication();
           }else{
            return LoginScreen();
           }

@@ -1,16 +1,14 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
-class StudentHome extends StatefulWidget {
-  const StudentHome({Key? key}) : super(key: key);
+class StudentGradesPage extends StatefulWidget {
+  const StudentGradesPage({Key? key}) : super(key: key);
 
   @override
-  State<StudentHome> createState() => _StudentHomeState();
+  State<StudentGradesPage> createState() => _StudentGradesPageState();
 }
 
-class _StudentHomeState extends State<StudentHome> {
+class _StudentGradesPageState extends State<StudentGradesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +19,12 @@ class _StudentHomeState extends State<StudentHome> {
             height: 720,
             child: SingleChildScrollView(
               child: Column(
+
+                //Add Items Here
                 children: [
                   SizedBox(height: 100),
                   Container(alignment: Alignment.topLeft,
-                    child: const Text("Home", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 45
+                    child: const Text("Grades", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 45
                     ), ),),
 
                   Container(alignment: Alignment.topLeft,

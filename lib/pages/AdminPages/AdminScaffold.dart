@@ -33,11 +33,12 @@ class _AdminScaffoldState extends State<AdminScaffold> {
             currentIndex = page;
           });
         },
-        children: const <Widget> [
+        children: <Widget> [
           AdminHome(),
           AdminLibraries(),
           AdminRegisterUsers(),
-          AdminProfile()
+          AdminProfile(),
+
 
         ],
       ),

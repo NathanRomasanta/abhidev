@@ -1,18 +1,19 @@
-import 'package:abhidev/pages/InstructorPages/InstructorProfile.dart';
-import 'package:abhidev/pages/InstructorPages/tempins.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:abhidev/pages/StudentPages/StudentAttendance.dart';
+import 'package:abhidev/pages/StudentPages/StudentGrades.dart';
+import 'package:abhidev/pages/StudentPages/StudentHome.dart';
+import 'package:abhidev/pages/StudentPages/StudentProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-
-class InstructorScaffold extends StatefulWidget {
-  const InstructorScaffold({Key? key}) : super(key: key);
+class StudentScaffold extends StatefulWidget {
+ StudentScaffold({Key? key}) : super(key: key);
 
   @override
-  State<InstructorScaffold> createState() => _InstructorScaffoldState();
+  State<StudentScaffold> createState() => _StudentScaffoldState();
 }
 
-class _InstructorScaffoldState extends State<InstructorScaffold> {
+class _StudentScaffoldState extends State<StudentScaffold> {
+
 
   int currentIndex = 0;
   PageController pageController = PageController(initialPage: 0);
@@ -30,10 +31,11 @@ class _InstructorScaffoldState extends State<InstructorScaffold> {
           });
         },
         children: <Widget> [
-          tempinstructorhome(),
-          InstructorProfilePage()
 
-
+          StudentHome(),
+          StudentGradesPage(),
+          StudentAttendancePage(),
+          StudentProfilePage(),
         ],
       ),
       backgroundColor: Colors.blue[800],
@@ -47,11 +49,11 @@ class _InstructorScaffoldState extends State<InstructorScaffold> {
             },
             backgroundColor: Colors.white,
             activeColor:Color(0xFF3b85fd),
-            tabs: [
+            tabs: const [
 
               GButton(icon: Icons.home, text: 'Home',),
-              GButton(icon: Icons.book, text: 'Librares',),
-              GButton(icon: Icons.person_add, text: 'Accounts',),
+              GButton(icon: Icons.book, text: 'Grades',),
+              GButton(icon: Icons.person_add, text: 'Attendance',),
               GButton(icon: Icons.person, text: 'Profile',)
             ],
           )

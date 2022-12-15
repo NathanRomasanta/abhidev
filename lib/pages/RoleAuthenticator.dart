@@ -1,11 +1,13 @@
 import 'package:abhidev/pages/AdminPages/AdminScaffold.dart';
 import 'package:abhidev/pages/InstructorPages/InstructorScaffold.dart';
-import 'package:abhidev/services/ErrorFile.dart';
+import 'package:abhidev/pages/StudentPages/StudentScaffold.dart';
+import 'package:abhidev/services/ErrorPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'StudentPages/StudentHome.dart';
+
 
 class RoleAuthentication extends StatelessWidget {
   RoleAuthentication({Key? key}) : super(key: key);
@@ -38,7 +40,7 @@ class RoleAuthentication extends StatelessWidget {
      }else if(snapshot['Instructors'] == true){
        return InstructorScaffold();
      }else{
-       return StudentHome();
+       return StudentScaffold();
      }
   }
 }

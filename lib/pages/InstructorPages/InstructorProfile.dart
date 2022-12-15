@@ -5,14 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class InstructorProfilePage extends StatelessWidget {
-  User? user;
 
   InstructorProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return StreamBuilder<DocumentSnapshot>(
-      stream: FirebaseFirestore.instance.collection("admins").doc(user?.uid).snapshots(),
+      stream: FirebaseFirestore.instance.collection("Accounts").doc(user.email).snapshots(),
       builder:(BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if(snapshot.hasError){
           return Text('Error: ${snapshot.error}');
@@ -26,38 +26,56 @@ class InstructorProfilePage extends StatelessWidget {
     );
   }
 
-  Center InstructorProfile(DocumentSnapshot snapshot) {
-    return Center(child: Column(
-      children: [
+  Scaffold InstructorProfile(DocumentSnapshot snapshot) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SizedBox(
+            width: 400,
+            height: 800,
+            child: Container(
+              child: Center(
+                child: Stack(
+                  children: [
+                    Container(padding: const EdgeInsets.only(right:210, bottom: 400),
+                      child: Text(snapshot['FirstName'], style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25
+                      ), ),),
 
-        Text(snapshot['FirstName']),
-        SizedBox(height: 50,),
-        Text(snapshot['LastName']),
+                    Container(padding: const EdgeInsets.only(right:210, top: 50),
+                      child: Text(snapshot['LastName'], style: TextStyle( color: Colors.black, fontSize: 20
+                      ), ),),
 
-        ElevatedButton(
-          onPressed: () {
-            SignOut();
-          },
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22)),
-              backgroundColor: Colors.blue,
-              fixedSize: const Size(240, 80)),
-          child: Text(
-            "Logout",
-            style: GoogleFonts.montserrat(
-              color: Colors.white,
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
+                    ElevatedButton(
+                      onPressed: () {
+                        SignOut();
+                      },
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22)),
+                          backgroundColor: Colors.blue,
+                          fixedSize: const Size(240, 80)),
+                      child: Text(
+                        "Logout",
+                        style: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+
+                ),
+              ),
             ),
           ),
-        ),
-      ],
-    ),);
+        )
+    );
   }
 
 
   Future SignOut() async {
+
     FirebaseAuth.instance.signOut();
   }
 }

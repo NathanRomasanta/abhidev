@@ -1,26 +1,17 @@
-import 'package:abhidev/pages/StudentPages/StudentHome.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'InstructorProfile.dart';
 
 
-class InstructorHome extends StatefulWidget {
- InstructorHome(DocumentSnapshot<Object?> documentSnapshot, {Key? key}) : super(key: key);
+class InstructorGradesPage extends StatefulWidget {
+  const InstructorGradesPage({Key? key}) : super(key: key);
 
   @override
-  State<InstructorHome> createState() => _InstructorHomeState();
+  State<InstructorGradesPage> createState() => _InstructorGradesPageState();
 }
 
-class _InstructorHomeState extends State<InstructorHome> {
-
-
+class _InstructorGradesPageState extends State<InstructorGradesPage> {
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
           child: SizedBox(
@@ -35,7 +26,7 @@ class _InstructorHomeState extends State<InstructorHome> {
                     ), ),),
 
                   Container(alignment: Alignment.topLeft,
-                    child: const Text("Instructor", style: TextStyle( color: Colors.black, fontSize: 20
+                    child: const Text("Student", style: TextStyle( color: Colors.black, fontSize: 20
                     ), ),),
 
                 ],
@@ -47,8 +38,5 @@ class _InstructorHomeState extends State<InstructorHome> {
           ),
         )
     );
-
   }
-
 }
-

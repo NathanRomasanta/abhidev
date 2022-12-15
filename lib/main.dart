@@ -1,8 +1,4 @@
-
-import 'package:abhidev/pages/AdminPages/AdminRegisterUsers.dart';
-import 'package:abhidev/pages/LoginScreen.dart';
-import 'package:abhidev/pages/Startup.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:abhidev/pages/StartupPages/Startup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,10 +23,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'abhidev',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
        fontFamily: 'Product Sans',
       ),
-      home: Startup(),
+      home: const Startup(),
     );
   }
 }

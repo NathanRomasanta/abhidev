@@ -1,20 +1,21 @@
-import 'package:abhidev/pages/AdminPages/RegisterAdmin.dart';
+import 'package:abhidev/pages/AdminPages/RegisterPages/RegisterAdmin.dart';
+import 'package:abhidev/pages/AdminPages/RegisterPages/RegisterInstructors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../AuthGate.dart';
-import 'RegisterStudents.dart';
+import 'RegisterPages/RegisterStudents.dart';
 
 
-class RegisterUsers extends StatefulWidget {
-  const RegisterUsers({Key? key}) : super(key: key);
+
+class AdminRegisterUsers extends StatefulWidget {
+  const AdminRegisterUsers({Key? key}) : super(key: key);
 
   @override
-  State<RegisterUsers> createState() => _RegisterUsersState();
+  State<AdminRegisterUsers> createState() => _AdminRegisterUsersState();
 }
 
-class _RegisterUsersState extends State<RegisterUsers> {
+class _AdminRegisterUsersState extends State<AdminRegisterUsers> {
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
@@ -78,7 +79,7 @@ class _RegisterUsersState extends State<RegisterUsers> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      NavigateToRegisterInstructor();
+                      NavigateToRegisterStudents();
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -86,7 +87,7 @@ class _RegisterUsersState extends State<RegisterUsers> {
                         backgroundColor: Colors.blue,
                         fixedSize: const Size(240, 80)),
                     child: Text(
-                      "Register Instructors",
+                      "Register Students",
                       style: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontSize: 17,
@@ -105,10 +106,23 @@ class _RegisterUsersState extends State<RegisterUsers> {
   }
 
   void NavigateToRegisterAdmin () {
-    Navigator.push(context, PageTransition(child: const RegisterAdmin(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 500)));
+    Navigator.push(context, PageTransition(
+        child: const RegisterAdmin(),
+        type: PageTransitionType.rightToLeft,
+        duration: const Duration(milliseconds: 500)));
   }
 
   void NavigateToRegisterInstructor () {
-    Navigator.push(context, PageTransition(child: const RegisterUsers(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 500)));
+    Navigator.push(context, PageTransition(
+        child: const RegisterInstructors(),
+        type: PageTransitionType.rightToLeft,
+        duration: Duration(milliseconds: 500)));
+  }
+
+  void NavigateToRegisterStudents () {
+    Navigator.push(context, PageTransition(
+        child: const RegisterStudents(),
+        type: PageTransitionType.rightToLeft,
+        duration: Duration(milliseconds: 500)));
   }
 }

@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class InstructorProfilePage extends StatelessWidget {
   User? user;
 
-  InstructorProfilePage(DocumentSnapshot<Object?> documentSnapshot, {Key? key}) : super(key: key);
+  InstructorProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class InstructorProfilePage extends StatelessWidget {
         switch (snapshot.connectionState){
           case ConnectionState.waiting: return Text("test");
           default:
-            return InstructorProfilePage(snapshot.data!);
+            return InstructorProfile(snapshot.data!);
         }
       },
     );

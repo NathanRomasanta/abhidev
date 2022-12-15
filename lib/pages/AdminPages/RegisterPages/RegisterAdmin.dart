@@ -1,22 +1,21 @@
-import 'package:abhidev/studentPages/studentHome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RegisterStudents extends StatefulWidget {
-  const RegisterStudents({Key? key}) : super(key: key);
+class RegisterAdmin extends StatefulWidget {
+  const RegisterAdmin({Key? key}) : super(key: key);
 
   @override
-  State<RegisterStudents> createState() => _RegisterStudentsState();
+  State<RegisterAdmin> createState() => _RegisterAdminState();
 }
 
-class _RegisterStudentsState extends State<RegisterStudents> {
+class _RegisterAdminState extends State<RegisterAdmin> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final firstnameController = TextEditingController();
   final lastnameController = TextEditingController();
-
 
   @override
   void dispose()  {
@@ -24,7 +23,6 @@ class _RegisterStudentsState extends State<RegisterStudents> {
     lastnameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
 
@@ -91,7 +89,7 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Register();
+                     Register();
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -99,7 +97,7 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                         backgroundColor: Colors.blue,
                         fixedSize: const Size(240, 80)),
                     child: Text(
-                      "Login",
+                      "Register Admin Account",
                       style: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontSize: 17,
@@ -109,38 +107,59 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                   ),
                 ],
               )),
-
-
         ),
       ),
-
-
     );
   }
 
   Future Register() async {
-    User? user = FirebaseAuth.instance.currentUser;
+    String Fname = firstnameController.text.trim();
+    String Lname = lastnameController.text.trim();
+    String Elecmail = emailController.text.trim();
 
+    FirebaseApp app = await Firebase.initializeApp(name: 'Accounts', options: Firebase.app().options);
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
-
-
-      /*FirebaseFirestore.instance.collection("Admins").doc(user?.uid).set({
-        "FirstName" : firstnameController,
-        "LastName" : lastnameController,
-        "uid" : user?.uid,
-        "email" : emailController,
-        "password" : passwordController,
-        "admin" : false,
-
-      }); */
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+      FirebaseFirestore.instance.collection("Accounts").doc(emailController.text.trim()).set({
+        "FirstName" : Fname,
+        "LastName" : Lname,
+        "Email" : Elecmail,
+        "Password" : passwordController.text.trim(),
+        "Admin" : true,
+        "Instructors" : false,
+      });
+      await app.delete();
+      return Future.sync(() => userCredential);
     }
     on FirebaseAuthException catch (e) {
-      print(e);
+      showDialog(context: context,
+          builder: (context) => AlertDialog(title:
+          Text("Register User"),
+            content: Text("Error Creating User $e"),
+            actions: [
+
+              TextButton(onPressed: (){
+                Navigator.pop(context);
+              }, child: Text("Ok")),
+            ],
+          ));
     }
     Navigator.pop(context);
+    Navigator.pop(context);
+    showDialog(context: context,
+        builder: (context) => AlertDialog(title:
+        Text("Register User"),
+          content: Text("Successfully Added User to the Database"),
+          actions: [
+
+            TextButton(onPressed: (){
+              Navigator.pop(context);
+            }, child: Text("Ok")),
+          ],
+        ));
+
+
+
 
   }
 }

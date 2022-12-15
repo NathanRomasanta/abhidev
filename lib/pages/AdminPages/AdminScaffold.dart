@@ -1,10 +1,12 @@
 import 'package:abhidev/pages/AdminPages/AdminHome.dart';
+import 'package:abhidev/pages/AdminPages/AdminLibraries.dart';
 import 'package:abhidev/pages/AdminPages/AdminProfile.dart';
-import 'package:abhidev/pages/AdminPages/RegisterStudents.dart';
-import 'package:abhidev/pages/AdminPages/RegisterUsers.dart';
+
+import 'package:abhidev/pages/AdminPages/AdminRegisterUsers.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class AdminScaffold extends StatefulWidget {
   const AdminScaffold({Key? key}) : super(key: key);
@@ -21,37 +23,44 @@ class _AdminScaffoldState extends State<AdminScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: PageView(
         controller: pageController,
-        onPageChanged: (newIndex) {
-          currentIndex = newIndex;
-        },
-        children: [
-          AdminHome(),
-          RegisterUsers(),
-          AdminProfile()
+        onPageChanged: (page) {
+          currentIndex = page;
 
+          setState(() {
+            currentIndex = page;
+          });
+        },
+        children: const <Widget> [
+          AdminHome(),
+          AdminLibraries(),
+          AdminRegisterUsers(),
+          AdminProfile()
 
         ],
       ),
       backgroundColor: Colors.blue[800],
-      bottomNavigationBar: CurvedNavigationBar(
-        index: currentIndex,
-        backgroundColor: Colors.blue,
-        onTap: (index) {
-          pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
-        },
-        color: Colors.blue,
-        animationDuration: Duration(milliseconds: 500),
-        items: [
-          Icon(Icons.home, color: Colors.white,),
-          Icon(Icons.book_sharp, color: Colors.white,),
-          Icon(Icons.person, color: Colors.white,)
-        ],
+      bottomNavigationBar: SizedBox(
+        height: 100,
+        child: GNav(
+          selectedIndex: currentIndex,
+          onTabChange: (value) {
+            currentIndex = value;
+            pageController.animateToPage(value, duration: const Duration(milliseconds: 300), curve: Curves.easeInOutCubic);
+          },
+          backgroundColor: Colors.white,
+          activeColor:Color(0xFF3b85fd),
+          tabs: [
+
+            GButton(icon: Icons.home, text: 'Home',),
+            GButton(icon: Icons.book, text: 'Librares',),
+            GButton(icon: Icons.person_add, text: 'Accounts',),
+            GButton(icon: Icons.person, text: 'Profile',)
+          ],
+        )
       ),
-
-
-
 
     );
   }

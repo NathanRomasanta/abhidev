@@ -33,7 +33,6 @@ class _InstructorHomeState extends State<InstructorHome> {
   Center InstructorProfile(DocumentSnapshot snapshot) {
     return Center(child: Column(
       children: [
-
         Text(snapshot['FirstName']),
         SizedBox(height: 50,),
         Text(snapshot['LastName']),

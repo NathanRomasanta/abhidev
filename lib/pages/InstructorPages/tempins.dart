@@ -1,16 +1,15 @@
-
+import 'package:abhidev/StudentPages/studentHome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
-class StudentHome extends StatefulWidget {
-  const StudentHome({Key? key}) : super(key: key);
+class tempinstructorhome extends StatefulWidget {
+  const tempinstructorhome({Key? key}) : super(key: key);
 
   @override
-  State<StudentHome> createState() => _StudentHomeState();
+  State<tempinstructorhome> createState() => _tempinstructorhomeState();
 }
 
-class _StudentHomeState extends State<StudentHome> {
+class _tempinstructorhomeState extends State<tempinstructorhome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +19,7 @@ class _StudentHomeState extends State<StudentHome> {
           children: [
 
             SizedBox(height: 100,),
-            Text("Student Home"),
+            Text("Instructor Home"),
             TextButton(onPressed: () {
               SignOut();
             }, child:  Text("Logout"))
@@ -28,9 +27,10 @@ class _StudentHomeState extends State<StudentHome> {
           ],
         ),
       ),
-    );
-  }
+    );  }
+
   Future SignOut() async {
     FirebaseAuth.instance.signOut();
+
   }
 }

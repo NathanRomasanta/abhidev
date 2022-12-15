@@ -41,5 +41,6 @@ class _AdminProfileState extends State<AdminProfile> {
 
   Future SignOut() async {
     FirebaseAuth.instance.signOut();
+
   }
 }

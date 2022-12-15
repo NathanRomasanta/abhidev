@@ -1,35 +1,30 @@
 import 'package:abhidev/pages/AdminPages/AdminScaffold.dart';
-import 'package:abhidev/pages/AdminPages/RegisterUsers.dart';
-import 'package:abhidev/pages/InstructorPages/InstructorHome.dart';
-import 'package:abhidev/pages/StudentPages/StudentHome.dart';
+import 'package:abhidev/pages/InstructorPages/InstructorScaffold.dart';
 import 'package:abhidev/services/ErrorFile.dart';
-import 'package:abhidev/studentPages/studentHome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'StudentPages/StudentHome.dart';
 
 class RoleAuthentication extends StatelessWidget {
-
-
   RoleAuthentication({Key? key}) : super(key: key);
-
   late User user;
   @override
   Widget build(BuildContext context) {
-
     final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
-      appBar: AppBar(title: Text("ABHI"),),
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection("Accounts").doc(user.uid).snapshots(),
+        stream: FirebaseFirestore.instance.collection("Accounts").doc(user.email).snapshots(),
         builder:(BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if(snapshot.hasError){
             return Text('Error: ${snapshot.error}');
           }
           switch (snapshot.connectionState){
-            case ConnectionState.waiting: return Text("Loading");
+            case ConnectionState.waiting: return const SpinKitFoldingCube(
+              size: 140,
+              color: Colors.white,
+            );
             default:
               return CheckRoles(snapshot.data!);
           }
@@ -37,17 +32,13 @@ class RoleAuthentication extends StatelessWidget {
       ),
     );
   }
-
   CheckRoles (DocumentSnapshot snapshot) {
      if(snapshot['Admin'] == true) {
        return AdminScaffold();
-     }else if(snapshot['Instructor'] == true){
-       return InstructorHome(snapshot);
+     }else if(snapshot['Instructors'] == true){
+       return InstructorScaffold();
      }else{
-       return ErrorPage();
+       return StudentHome();
      }
   }
-
-
-
 }

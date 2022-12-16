@@ -10,11 +10,13 @@ import 'StudentPages/StudentHome.dart';
 
 
 class RoleAuthentication extends StatelessWidget {
-  RoleAuthentication({Key? key}) : super(key: key);
-  late User user;
+  const RoleAuthentication({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+
     final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance.collection("Accounts").doc(user.email).snapshots(),

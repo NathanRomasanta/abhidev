@@ -12,10 +12,14 @@ class RegisterInstructors extends StatefulWidget {
 }
 
 class _RegisterInstructorsState extends State<RegisterInstructors> {
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final firstnameController = TextEditingController();
   final lastnameController = TextEditingController();
+  String? dropdownCallback;
+
+
 
   @override
   void dispose()  {
@@ -121,8 +125,27 @@ class _RegisterInstructorsState extends State<RegisterInstructors> {
                                       width: 1, color: Colors.white))),
                         ),
 
-                        const SizedBox(height: 75,),
+                        const SizedBox(height: 10,),
+                        DropdownButton(
+                          value: dropdownCallback,
+                          items: const [
+                            DropdownMenuItem(value: "MOA",child: Text("MOA")),
+                            DropdownMenuItem(value: "PHA",child: Text("Pharmacy Assistant")),
+                            DropdownMenuItem(value: "Accounting&Payroll",child: Text("Accounting & Payroll")),
+                            DropdownMenuItem(value: "BA",child: Text("Business Administration")),
+                            DropdownMenuItem(value: "MT1",child: Text("Massage Therapy Year 1")),
+                            DropdownMenuItem(value: "MT2",child: Text("Massage Therapy Year 2")),
+                            DropdownMenuItem(value: "CSW",child: Text("CSW")),
+                            DropdownMenuItem(value: "EA",child: Text("Education Assistant")),
 
+                        ], onChanged: (val){
+                            setState(() {
+                              dropdownCallback = val as String;
+                            });
+                        },
+                        ),
+
+                        const SizedBox(height: 10,),
                         ElevatedButton(
                           onPressed: () {
                             if(emailController.text.isEmpty && passwordController.text.isEmpty){
@@ -167,6 +190,7 @@ class _RegisterInstructorsState extends State<RegisterInstructors> {
     );
   }
 
+
   Future Register() async {
     String Fname = firstnameController.text.trim();
     String Lname = lastnameController.text.trim();
@@ -182,9 +206,13 @@ class _RegisterInstructorsState extends State<RegisterInstructors> {
         "Password" : passwordController.text.trim(),
         "Admin" : false,
         "Instructors" : true,
+        "Course" : dropdownCallback,
       });
+
+      Navigator.pop(context);
       await app.delete();
       return Future.sync(() => userCredential);
+
 
     }
     on FirebaseAuthException catch (e) {
@@ -200,8 +228,7 @@ class _RegisterInstructorsState extends State<RegisterInstructors> {
             ],
           ));
     }
-    Navigator.pop(context);
-    Navigator.pop(context);
+
     showDialog(context: context,
         builder: (context) => AlertDialog(title:
         Text("Register User"),

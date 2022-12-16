@@ -9,7 +9,7 @@ import 'InstructorProfile.dart';
 
 
 class InstructorHome extends StatefulWidget {
- InstructorHome(DocumentSnapshot<Object?> documentSnapshot, {Key? key}) : super(key: key);
+ InstructorHome( {Key? key}) : super(key: key);
 
   @override
   State<InstructorHome> createState() => _InstructorHomeState();

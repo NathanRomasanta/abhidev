@@ -1,3 +1,6 @@
+import 'package:abhidev/pages/InstructorPages/InstructorAttendance.dart';
+import 'package:abhidev/pages/InstructorPages/InstructorGrades.dart';
+import 'package:abhidev/pages/InstructorPages/InstructorHome.dart';
 import 'package:abhidev/pages/InstructorPages/InstructorProfile.dart';
 import 'package:abhidev/pages/InstructorPages/tempins.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,7 +33,9 @@ class _InstructorScaffoldState extends State<InstructorScaffold> {
           });
         },
         children: <Widget> [
-          tempinstructorhome(),
+          InstructorHome(),
+          InstructorGradesPage(),
+          InstructorAttendance(),
           InstructorProfilePage()
 
 

@@ -1,3 +1,4 @@
+import 'package:abhidev/pages/InstructorPages/CoursesPages/BusinessAdStudentsPage.dart';
 import 'package:abhidev/pages/InstructorPages/CoursesPages/MOAStudents.dart';
 import 'package:abhidev/pages/InstructorPages/CoursesPages/PHAStudentPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,11 +46,11 @@ class _InstructorGradesPageState extends State<InstructorGradesPage> {
   CheckCourse (DocumentSnapshot snapshot) {
     if(snapshot['Course'] == "MOA") {
       return MOAStudentsPage();
-    }else if(snapshot['Course'] == "PHA"){
-      return PHAStudentPage();
+    }else if(snapshot['Course'] == "Accounting&Payroll"){
+      return BusinessAdStudentsPage();
     }
     else if(snapshot['Course'] == "Accounting&Payroll") {
-      return PHAStudentPage();
+      return BusinessAdStudentsPage();
     }else{
       return ErrorPage();
     }

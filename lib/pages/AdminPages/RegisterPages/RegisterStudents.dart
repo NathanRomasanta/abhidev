@@ -16,6 +16,8 @@ class _RegisterStudentsState extends State<RegisterStudents> {
   final passwordController = TextEditingController();
   final firstnameController = TextEditingController();
   final lastnameController = TextEditingController();
+  final uidController = TextEditingController();
+  String? dropdownCallback;
 
 
   @override
@@ -24,6 +26,8 @@ class _RegisterStudentsState extends State<RegisterStudents> {
     lastnameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    uidController.dispose();
+
     super.dispose();
   }
 
@@ -37,7 +41,6 @@ class _RegisterStudentsState extends State<RegisterStudents> {
           decoration: const BoxDecoration(
               image: DecorationImage(image: AssetImage('images/RegisterBKG.png'), fit: BoxFit.fill)
           ),
-
 
           child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -58,7 +61,7 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                         TextFormField(
 
                           controller: firstnameController,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
 
@@ -79,6 +82,22 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                           decoration: const InputDecoration(
 
                               labelText: "Last Name",
+                              labelStyle: TextStyle(
+                                  color: Colors.white
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.white))),
+                        ),
+                        const SizedBox(height: 25,),
+                        TextFormField(
+
+                          controller: uidController,
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                          decoration: const InputDecoration(
+
+                              labelText: "UID",
                               labelStyle: TextStyle(
                                   color: Colors.white
                               ),
@@ -122,7 +141,28 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                                       width: 1, color: Colors.white))),
                         ),
 
+                        const SizedBox(height: 25,),
+                        DropdownButton(
+                          value: dropdownCallback,
+                          items: const [
+                            DropdownMenuItem(value: "MOAUC",child: Text("MOA")),
+                            DropdownMenuItem(value: "PHA",child: Text("Pharmacy Assistant")),
+                            DropdownMenuItem(value: "Accounting&Payroll",child: Text("Accounting & Payroll")),
+                            DropdownMenuItem(value: "BA",child: Text("Business Administration")),
+                            DropdownMenuItem(value: "MT1",child: Text("Massage Therapy Year 1")),
+                            DropdownMenuItem(value: "MT2",child: Text("Massage Therapy Year 2")),
+                            DropdownMenuItem(value: "CSW",child: Text("CSW")),
+                            DropdownMenuItem(value: "EA",child: Text("Education Assistant")),
+
+                          ], onChanged: (val){
+                          setState(() {
+                            dropdownCallback = val as String;
+                          });
+                        },
+                        ),
+
                         const SizedBox(height: 75,),
+
 
                         ElevatedButton(
                           onPressed: () {
@@ -130,7 +170,7 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                               showDialog(context: context,
                                   builder: (context) => AlertDialog(title:
                                   const Text("Empty fields"),
-                                    content: Text("Your Fields are empty, please try again"),
+                                    content: const Text("Your Fields are empty, please try again"),
                                     actions: [
 
                                       TextButton(onPressed: (){
@@ -138,7 +178,9 @@ class _RegisterStudentsState extends State<RegisterStudents> {
                                       }, child: const Text("Ok")),
                                     ],
                                   ));
-                            }else
+                            }else if (dropdownCallback == "MOAUC"){
+                              RegisterMOAStudent();
+                            }
                             {
                               Register();
                             }
@@ -168,11 +210,98 @@ class _RegisterStudentsState extends State<RegisterStudents> {
     );
   }
 
+  Future RegisterMOAStudent() async {
+    String Fname = firstnameController.text.trim();
+    String Lname = lastnameController.text.trim();
+    String Elecmail = emailController.text.trim();
+    String SUID = uidController.text.trim();
+
+
+    FirebaseApp app = await Firebase.initializeApp(name: 'Accounts', options: Firebase.app().options);
+    try {
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+      //Adding Student to Accounts Folder
+      await FirebaseFirestore.instance.collection("Accounts").doc(emailController.text.trim()).set({
+        "FirstName" : Fname,
+        "LastName" : Lname,
+        "Email" : Elecmail,
+        "UID" : SUID,
+        "Password" : passwordController.text.trim(),
+        "Admin" : false,
+        "Instructors" : false,
+        "Course" : "MOAUC",
+
+        //Adding Student to Course Folder
+      });
+      await FirebaseFirestore.instance.collection("MOAUC").doc(uidController.text.trim()).set({
+        "FirstName" : Fname,
+        "LastName" : Lname,
+        "Email" : Elecmail,
+        "UID" : SUID,
+        "FinalGrade" : 0,
+        "IMOA02" : 0,
+        "COM01" : 0,
+        "ACC03" : 0,
+        "MT05" : 0,
+        "MOP06" : 0,
+        "ASP07" : 0,
+        "MBSP08" : 0,
+        "CSP09" : 0,
+        "JOB10" : 0,
+        "PRAC11" : 0,
+
+      });
+      await app.delete();
+      Navigator.pop(context);
+      return Future.sync(() => userCredential);
+
+    }
+    on FirebaseAuthException catch (e) {
+      showDialog(context: context,
+          builder: (context) => AlertDialog(title:
+          Text("Register User"),
+            content: Text("Error Creating User $e"),
+            actions: [
+
+              TextButton(onPressed: (){
+                Navigator.pop(context);
+              }, child: Text("Ok")),
+            ],
+          ));
+    }
+    showDialog(context: context,
+        builder: (context) => AlertDialog(title:
+        Text("Register User"),
+          content: Text("Successfully Added User to the Database"),
+          actions: [
+
+            TextButton(onPressed: (){
+              Navigator.pop(context);
+            }, child: Text("Ok")),
+          ],
+        ));
+
+  }
+
+
   Future Register() async {
+
     String Fname = firstnameController.text.trim();
     String Lname = lastnameController.text.trim();
     String Elecmail = emailController.text.trim();
 
+    Navigator.pop(context);
+    showDialog(context: context,
+        builder: (context) => AlertDialog(title:
+        Text("Register User"),
+          content: Text("Successfully Added User to the Database"),
+          actions: [
+
+            TextButton(onPressed: (){
+              Navigator.pop(context);
+            }, child: Text("Ok")),
+          ],
+        ));
     FirebaseApp app = await Firebase.initializeApp(name: 'Accounts', options: Firebase.app().options);
     try {
       UserCredential userCredential = await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
@@ -180,10 +309,12 @@ class _RegisterStudentsState extends State<RegisterStudents> {
         "FirstName" : Fname,
         "LastName" : Lname,
         "Email" : Elecmail,
+
         "Password" : passwordController.text.trim(),
         "Admin" : false,
         "Instructors" : false,
       });
+
       await app.delete();
       return Future.sync(() => userCredential);
 
@@ -201,22 +332,5 @@ class _RegisterStudentsState extends State<RegisterStudents> {
             ],
           ));
     }
-    Navigator.pop(context);
-    Navigator.pop(context);
-    showDialog(context: context,
-        builder: (context) => AlertDialog(title:
-        Text("Register User"),
-          content: Text("Successfully Added User to the Database"),
-          actions: [
-
-            TextButton(onPressed: (){
-              Navigator.pop(context);
-            }, child: Text("Ok")),
-          ],
-        ));
-
-
-
-
   }
 }

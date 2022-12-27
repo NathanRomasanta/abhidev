@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'BusAdStudentsDetails.dart';
+import 'StudenDetailPages/BusAdStudentsDetails.dart';
 
 
 class BusinessAdStudentsPage extends StatelessWidget {

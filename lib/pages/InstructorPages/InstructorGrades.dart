@@ -1,6 +1,7 @@
-import 'package:abhidev/pages/InstructorPages/CoursesPages/BusinessAdStudentsPage.dart';
+import 'package:abhidev/pages/InstructorPages/CoursesPages/BAStudents.dart';
 import 'package:abhidev/pages/InstructorPages/CoursesPages/MOAStudents.dart';
 import 'package:abhidev/pages/InstructorPages/CoursesPages/PHAStudentPage.dart';
+import 'package:abhidev/pages/InstructorPages/CoursesPages/StudenDetailPages/BAStudentsDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,11 +47,9 @@ class _InstructorGradesPageState extends State<InstructorGradesPage> {
   CheckCourse (DocumentSnapshot snapshot) {
     if(snapshot['Course'] == "MOA") {
       return MOAStudentsPage();
-    }else if(snapshot['Course'] == "Accounting&Payroll"){
-      return BusinessAdStudentsPage();
-    }
-    else if(snapshot['Course'] == "Accounting&Payroll") {
-      return BusinessAdStudentsPage();
+    }else if(snapshot['Course'] == "BA"){
+
+      return BAStudents();
     }else{
       return ErrorPage();
     }

@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'StudenDetailPages/BusAdStudentsDetails.dart';
+import 'StudenDetailPages/BAStudentsDetails.dart';
 
 
-class BusinessAdStudentsPage extends StatelessWidget {
-  BusinessAdStudentsPage({Key? key}) : super(key: key) {
+class BAStudents extends StatelessWidget {
+  BAStudents({Key? key}) : super(key: key) {
     _stream = _reference.snapshots();
   }
 
-  CollectionReference _reference = FirebaseFirestore.instance.collection("Accounting&Payroll");
+  CollectionReference _reference = FirebaseFirestore.instance.collection("BusinessAdministration");
   late Stream<QuerySnapshot> _stream;
 
 
@@ -35,6 +35,7 @@ class BusinessAdStudentsPage extends StatelessWidget {
               'FirstName': e['FirstName'],
               'LastName': e['LastName'],
               'Email': e['Email'],
+              'FinalGrade': e['FinalGrade'],
 
 
             }).toList();
